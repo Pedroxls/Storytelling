@@ -310,21 +310,27 @@ def render_exploracion():
     # Gráfica 2: Categorías
     df_cat = df.groupby("Category").agg(Sales=("Sales", "sum"), Profit=("Profit", "sum")).reset_index()
 
+    y_max = df_cat["Sales"].max() * 1.22
+
     fig2 = go.Figure()
     fig2.add_trace(go.Bar(
         name="Ventas", x=df_cat["Category"], y=df_cat["Sales"],
         marker_color=SALES, opacity=.85,
         text=df_cat["Sales"].apply(fmt_m), textposition="outside",
+        cliponaxis=False, textfont=dict(size=12),
     ))
     fig2.add_trace(go.Bar(
         name="Utilidad", x=df_cat["Category"], y=df_cat["Profit"],
         marker_color=[PROFIT if p >= 0 else LOSS for p in df_cat["Profit"]],
         text=df_cat["Profit"].apply(fmt_m), textposition="outside",
+        cliponaxis=False, textfont=dict(size=12),
     ))
-    fig2.update_layout(**LAYOUT, height=360,
+    fig2.update_layout(**LAYOUT, height=400,
         barmode="group",
-        yaxis=dict(tickprefix="$", gridcolor="#F1F5F9", zeroline=False),
+        yaxis=dict(tickprefix="$", gridcolor="#F1F5F9", zeroline=False,
+                   range=[df_cat["Profit"].min() * 1.3, y_max]),
         xaxis=dict(showgrid=False),
+        margin=dict(l=8, r=8, t=50, b=8),
     )
     render_chart(
         "Ventas altas no siempre significan mayor utilidad",
