@@ -139,7 +139,6 @@ def kpi_html(label, value, delta=None, color=None):
 
 LAYOUT = dict(
     plot_bgcolor="white", paper_bgcolor="white",
-    margin=dict(l=8, r=8, t=36, b=8),
     font=dict(family="Inter, -apple-system, sans-serif", color=TEXT, size=12),
     legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1, bgcolor="rgba(0,0,0,0)"),
     hoverlabel=dict(bgcolor="white", font_size=12),
@@ -297,6 +296,7 @@ def render_exploracion():
         fill="tozeroy", fillcolor="rgba(20,184,166,.07)",
     ))
     fig1.update_layout(**LAYOUT, height=310,
+        margin=dict(l=8, r=8, t=36, b=8),
         yaxis=dict(tickprefix="$", gridcolor="#F1F5F9", showgrid=True, zeroline=False),
         xaxis=dict(showgrid=False),
         hovermode="x unified",
@@ -310,7 +310,8 @@ def render_exploracion():
     # Gráfica 2: Categorías
     df_cat = df.groupby("Category").agg(Sales=("Sales", "sum"), Profit=("Profit", "sum")).reset_index()
 
-    y_max = df_cat["Sales"].max() * 1.22
+    y_max = df_cat["Sales"].max() * 1.25
+    y_min = min(0, df_cat["Profit"].min() * 1.4)
 
     fig2 = go.Figure()
     fig2.add_trace(go.Bar(
@@ -325,12 +326,12 @@ def render_exploracion():
         text=df_cat["Profit"].apply(fmt_m), textposition="outside",
         cliponaxis=False, textfont=dict(size=12),
     ))
-    fig2.update_layout(**LAYOUT, height=400,
+    fig2.update_layout(**LAYOUT, height=420,
         barmode="group",
+        margin=dict(l=8, r=8, t=40, b=8),
         yaxis=dict(tickprefix="$", gridcolor="#F1F5F9", zeroline=False,
-                   range=[df_cat["Profit"].min() * 1.3, y_max]),
+                   range=[y_min, y_max]),
         xaxis=dict(showgrid=False),
-        margin=dict(l=8, r=8, t=50, b=8),
     )
     render_chart(
         "Ventas altas no siempre significan mayor utilidad",
@@ -361,6 +362,7 @@ def render_exploracion():
         annotation_font_color=MUTED,
     )
     fig3.update_layout(**LAYOUT, height=420,
+        margin=dict(l=8, r=8, t=36, b=8),
         xaxis=dict(tickformat=",.0%", showgrid=False, title="Descuento"),
         yaxis=dict(tickprefix="$", gridcolor="#F1F5F9", title="Utilidad"),
     )
@@ -388,9 +390,9 @@ def render_exploracion():
         colorbar=dict(title="Utilidad", tickprefix="$", thickness=14),
     ))
     fig4.update_layout(**LAYOUT, height=270,
+        margin=dict(l=8, r=8, t=50, b=8),
         xaxis=dict(side="top", title=""),
         yaxis=dict(title=""),
-        margin=dict(l=8, r=8, t=50, b=8),
     )
     render_chart(
         "¿Dónde se concentra la baja rentabilidad?",
@@ -412,10 +414,14 @@ def render_exploracion():
         cliponaxis=False,
     ))
     fig5.add_vline(x=0, line_color=MUTED, line_width=1.5, line_dash="dot")
+    x_min = df_sub["Profit"].min() * 1.1
+    x_max = df_sub["Profit"].max() * 1.35
+
     fig5.update_layout(**LAYOUT, height=450,
-        xaxis=dict(tickprefix="$", showgrid=True, gridcolor="#F1F5F9", title="Utilidad"),
+        margin=dict(l=8, r=100, t=10, b=8),
+        xaxis=dict(tickprefix="$", showgrid=True, gridcolor="#F1F5F9", title="Utilidad",
+                   range=[x_min, x_max]),
         yaxis=dict(showgrid=False, title=""),
-        margin=dict(l=8, r=90, t=10, b=8),
     )
     render_chart(
         "Subcategorías que reducen la rentabilidad",
