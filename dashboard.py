@@ -333,11 +333,11 @@ def render_exploracion():
     fig2.update_layout(**LAYOUT, height=460,
         barmode="group",
         margin=dict(l=8, r=8, t=70, b=8),
-        legend=dict(orientation="h", yanchor="bottom", y=1.05, xanchor="right", x=1, bgcolor="rgba(0,0,0,0)"),
         yaxis=dict(tickprefix="$", gridcolor="#F1F5F9", zeroline=False,
                    range=[y_min, y_max]),
         xaxis=dict(showgrid=False),
     )
+    fig2.update_layout(legend=dict(orientation="h", yanchor="bottom", y=1.05, xanchor="right", x=1, bgcolor="rgba(0,0,0,0)"))
     render_chart(
         "Ventas altas no siempre significan mayor utilidad",
         "Furniture vende $742K pero genera apenas $18K de utilidad — margen de solo 2.5%. Technology y Office Supplies son mucho más eficientes.",
