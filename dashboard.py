@@ -87,9 +87,7 @@ SECTIONS = [
     "1. Portada Ejecutiva",
     "2. Contexto del Negocio",
     "3. Exploración Visual",
-    "4. Storytelling",
-    "5. Interactividad",
-    "6. Conclusiones",
+    "4. Conclusiones",
 ]
 
 with st.sidebar:
@@ -171,7 +169,9 @@ def render_portada():
       <div style="display:flex;gap:48px;align-items:flex-start;">
         <div style="min-width:160px;">
           <div style="font-size:.7rem;color:{MUTED};text-transform:uppercase;letter-spacing:.08em;font-weight:700;">Integrantes</div>
-          <div style="margin-top:8px;color:{TEXT};font-size:.9rem;line-height:1.9;">Equipo de Análisis Estratégico</div>
+          <div style="margin-top:8px;color:{TEXT};font-size:.9rem;line-height:1.9;">
+            Pedro Rodriguez<br>Sharon Reyes<br>Claudio Cantu<br>Milla Chuc<br>Isabel Miramontes
+          </div>
         </div>
         <div style="flex:1;border-left:1px solid {BORDER};padding-left:32px;">
           <div style="font-size:.7rem;color:{MUTED};text-transform:uppercase;letter-spacing:.08em;font-weight:700;">Resumen Ejecutivo</div>
@@ -262,6 +262,32 @@ def render_contexto():
 # ══════════════════════════════════════════════════════════════════════════════════
 def render_exploracion():
     st.markdown('<div class="section-header">Exploración Visual</div>', unsafe_allow_html=True)
+
+    # ── Narrative banner ───────────────────────────────────────────────────────────
+    st.markdown(f"""
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;">
+      <div style="background:{CARD};border-radius:10px;padding:14px 16px;border:1px solid {BORDER};border-top:3px solid {SALES};">
+        <div style="font-size:.65rem;font-weight:800;color:{SALES};text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px;">01 · Situación</div>
+        <div style="font-size:.82rem;color:{TEXT};font-weight:600;margin-bottom:3px;">El negocio vende bien</div>
+        <div style="font-size:.76rem;color:{MUTED};line-height:1.5;">$2.30M en ventas, 5,009 órdenes.</div>
+      </div>
+      <div style="background:{CARD};border-radius:10px;padding:14px 16px;border:1px solid {BORDER};border-top:3px solid {AMBER};">
+        <div style="font-size:.65rem;font-weight:800;color:{AMBER};text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px;">02 · Hallazgo</div>
+        <div style="font-size:.82rem;color:{TEXT};font-weight:600;margin-bottom:3px;">No todo se convierte en ganancia</div>
+        <div style="font-size:.76rem;color:{MUTED};line-height:1.5;">Furniture: $742K ventas, solo $18K utilidad.</div>
+      </div>
+      <div style="background:{CARD};border-radius:10px;padding:14px 16px;border:1px solid {BORDER};border-top:3px solid {LOSS};">
+        <div style="font-size:.65rem;font-weight:800;color:{LOSS};text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px;">03 · Evidencia</div>
+        <div style="font-size:.82rem;color:{TEXT};font-weight:600;margin-bottom:3px;">Descuentos y subcategorías</div>
+        <div style="font-size:.76rem;color:{MUTED};line-height:1.5;">Descuento &gt;20% = pérdida frecuente.</div>
+      </div>
+      <div style="background:{CARD};border-radius:10px;padding:14px 16px;border:1px solid {BORDER};border-top:3px solid {PROFIT};">
+        <div style="font-size:.65rem;font-weight:800;color:{PROFIT};text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px;">04 · Acción</div>
+        <div style="font-size:.82rem;color:{TEXT};font-weight:600;margin-bottom:3px;">Enfocar en rentabilidad</div>
+        <div style="font-size:.76rem;color:{MUTED};line-height:1.5;">Priorizar Technology (17.4%) y limitar descuentos.</div>
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     # KPIs
     total_s  = df["Sales"].sum()
@@ -594,7 +620,5 @@ def render_conclusiones():
     SECTIONS[0]: render_portada,
     SECTIONS[1]: render_contexto,
     SECTIONS[2]: render_exploracion,
-    SECTIONS[3]: render_storytelling,
-    SECTIONS[4]: render_interactividad,
-    SECTIONS[5]: render_conclusiones,
+    SECTIONS[3]: render_conclusiones,
 }[section]()
