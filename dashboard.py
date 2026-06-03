@@ -8,7 +8,7 @@ warnings.filterwarnings("ignore")
 # ── PAGE CONFIG ───────────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="Ventas vs Rentabilidad · Superstore",
-    page_icon="📊",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -196,7 +196,6 @@ def render_portada():
         st.markdown(kpi_html("Órdenes Únicas", f"{df['Order ID'].nunique():,}", "Transacciones registradas", MUTED), unsafe_allow_html=True)
 
 
-# ══════════════════════════════════════════════════════════════════════════════════
 # SECTION 2 – CONTEXTO
 # ══════════════════════════════════════════════════════════════════════════════════
 def render_contexto():
@@ -438,13 +437,13 @@ def render_storytelling():
     st.markdown('<div class="section-sub">La historia que cuentan los datos</div>', unsafe_allow_html=True)
 
     steps = [
-        (SALES,  "01", "📈", "Situación: El negocio vende bien",
+        (SALES,  "01", "", "Situación: El negocio vende bien",
          "Superstore presenta un alto volumen de ventas en diferentes categorías y regiones. Con $2.30M en ingresos y 5,009 órdenes procesadas, la operación es robusta y tiene presencia en todo el país."),
-        (AMBER,  "02", "⚠️", "Hallazgo: No todo lo vendido se convierte en ganancia",
+        (AMBER,  "02", "", "Hallazgo: No todo lo vendido se convierte en ganancia",
          "Furniture, a pesar de generar $742K en ventas, registra apenas $18K de utilidad — margen de solo 2.5%, muy por debajo del promedio de 12.47%. Vender mucho no es lo mismo que ganar mucho."),
-        (LOSS,   "03", "🔍", "Evidencia: Descuentos y categorías explican el problema",
+        (LOSS,   "03", "", "Evidencia: Descuentos y categorías explican el problema",
          "A medida que el descuento supera el 20%, las ventas frecuentemente generan pérdida. Subcategorías como Tables (−$17.7K), Bookcases (−$3.5K) y Supplies (−$1.2K) destruyen valor activamente."),
-        (PROFIT, "04", "✅", "Recomendación: Enfocar en rentabilidad, no solo en volumen",
+        (PROFIT, "04", "", "Recomendación: Enfocar en rentabilidad, no solo en volumen",
          "Limitar descuentos agresivos en Furniture, revisar subcategorías con pérdida estructural, y fortalecer categorías con mayor margen: Technology (17.4%) y Office Supplies (17.0%)."),
     ]
 
@@ -490,11 +489,11 @@ def render_interactividad():
     """, unsafe_allow_html=True)
 
     filters_info = [
-        ("📅", "Año",                "Multiselect", "Filtra por año para analizar tendencias temporales 2014–2017."),
-        ("🗺️", "Región",             "Multiselect", "Aisla West, East, Central o South para análisis territorial."),
-        ("📦", "Categoría",          "Multiselect", "Compara Technology, Office Supplies y Furniture individualmente."),
-        ("👥", "Segmento",           "Multiselect", "Distingue Consumer, Corporate y Home Office."),
-        ("🏷️", "Rango de Descuento", "Slider",      "Ajusta el rango (0–80%) para ver cómo distintos niveles afectan la rentabilidad."),
+        ("", "Año",                "Multiselect", "Filtra por año para analizar tendencias temporales 2014–2017."),
+        ("", "Región",             "Multiselect", "Aisla West, East, Central o South para análisis territorial."),
+        ("", "Categoría",          "Multiselect", "Compara Technology, Office Supplies y Furniture individualmente."),
+        ("", "Segmento",           "Multiselect", "Distingue Consumer, Corporate y Home Office."),
+        ("", "Rango de Descuento", "Slider",      "Ajusta el rango (0–80%) para ver cómo distintos niveles afectan la rentabilidad."),
     ]
 
     for col, (icon, title, widget, desc) in zip(st.columns(5), filters_info):
@@ -555,9 +554,9 @@ def render_conclusiones():
     st.markdown(f'<div style="font-size:.95rem;font-weight:700;color:{TEXT};margin:22px 0 12px;">2 Recomendaciones Accionables</div>', unsafe_allow_html=True)
 
     recs = [
-        ("🚫", "Limitar descuentos agresivos",
+        ("", "Limitar descuentos agresivos",
          "Principalmente en Furniture y productos con historial de pérdida. Establecer un techo máximo (~15%) para categorías de menor margen."),
-        ("🎯", "Priorizar categorías rentables",
+        ("", "Priorizar categorías rentables",
          "Enfocar esfuerzos en Technology y Office Supplies. Revisar Tables, Bookcases y Supplies — reducir volumen o ajustar precios para recuperar margen."),
     ]
 
