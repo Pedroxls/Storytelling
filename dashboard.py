@@ -28,7 +28,12 @@ AMBER  = "#F59E0B"
 st.markdown(f"""
 <style>
 .stApp {{ background-color:{BG}; }}
-.block-container {{ padding-top:1.5rem; padding-bottom:2rem; max-width:1400px; }}
+.block-container {{ padding-top:3.5rem !important; padding-bottom:2rem; max-width:1400px; }}
+
+/* Ocultar barra superior de Streamlit para que no tape el contenido */
+header[data-testid="stHeader"] {{ background:transparent !important; }}
+#MainMenu {{ visibility:hidden; }}
+footer {{ visibility:hidden; }}
 
 [data-testid="stSidebar"] {{ background-color:#0F172A !important; }}
 [data-testid="stSidebar"] p,
@@ -309,25 +314,26 @@ def render_exploracion():
     # Gráfica 2: Categorías
     df_cat = df.groupby("Category").agg(Sales=("Sales", "sum"), Profit=("Profit", "sum")).reset_index()
 
-    y_max = df_cat["Sales"].max() * 1.25
-    y_min = min(0, df_cat["Profit"].min() * 1.4)
+    y_max = df_cat["Sales"].max() * 1.30
+    y_min = min(0, df_cat["Profit"].min() * 1.5)
 
     fig2 = go.Figure()
     fig2.add_trace(go.Bar(
         name="Ventas", x=df_cat["Category"], y=df_cat["Sales"],
         marker_color=SALES, opacity=.85,
         text=df_cat["Sales"].apply(fmt_m), textposition="outside",
-        cliponaxis=False, textfont=dict(size=12),
+        cliponaxis=False, textfont=dict(size=11),
     ))
     fig2.add_trace(go.Bar(
         name="Utilidad", x=df_cat["Category"], y=df_cat["Profit"],
         marker_color=[PROFIT if p >= 0 else LOSS for p in df_cat["Profit"]],
         text=df_cat["Profit"].apply(fmt_m), textposition="outside",
-        cliponaxis=False, textfont=dict(size=12),
+        cliponaxis=False, textfont=dict(size=11),
     ))
-    fig2.update_layout(**LAYOUT, height=420,
+    fig2.update_layout(**LAYOUT, height=460,
         barmode="group",
-        margin=dict(l=8, r=8, t=40, b=8),
+        margin=dict(l=8, r=8, t=70, b=8),
+        legend=dict(orientation="h", yanchor="bottom", y=1.05, xanchor="right", x=1, bgcolor="rgba(0,0,0,0)"),
         yaxis=dict(tickprefix="$", gridcolor="#F1F5F9", zeroline=False,
                    range=[y_min, y_max]),
         xaxis=dict(showgrid=False),
